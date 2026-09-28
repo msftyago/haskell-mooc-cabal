@@ -55,7 +55,8 @@ quadruple x =
 --   distance 1 1 4 5  ==>  5.0
 
 distance x1 y1 x2 y2 =
-  sqrt ((x1 - y1) ^ 2) + ((x2 - y2) ^ 2)
+  sqrt ((x1 - x2) ^ 2 + (y1 - y2) ^ 2)
+
 
 ------------------------------------------------------------------------------
 -- Ex 5: define the function eeny that returns "eeny" for even inputs
@@ -141,6 +142,6 @@ power n k =
 --   ilog3 7 ==> 2
 
 ilog3 :: Integer -> Integer
-ilog3 1 = 1
-ilog3 x =
-  x `div` (ilog3 x - 1)
+ilog3 0 = 0
+ilog3 x = ilog3 (x `div` 3) + 1
+
