@@ -190,10 +190,3 @@ addEithers (Right a) (Right b) = Right (a + b)
 addEithers (Right a) b = b
 addEithers a _ = a
 addEithers _ b = b
-
--- addEithers a b
-
--- | isRight a && isRight b = a + b
--- | isRight a && isLeft b = b
--- | isLeft a && isLeft b = a
-  

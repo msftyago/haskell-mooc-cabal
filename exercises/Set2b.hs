@@ -19,7 +19,7 @@ binomial :: Integer -> Integer -> Integer
 binomial n k
   | k > n = 0
   | k == 0 || k == n = 1
-  | otherwise = (binomial (n-1) (k-1)) + (binomial (n-1) k)
+  | otherwise        = (binomial (n-1) (k-1)) + (binomial (n-1) k)
 
 ------------------------------------------------------------------------------
 -- Ex 2: implement the odd factorial function. Odd factorial is like
@@ -32,7 +32,7 @@ binomial n k
 oddFactorial :: Integer -> Integer
 oddFactorial 1 = 1
 oddFactorial x
-  | even x = oddFactorial (x - 1)
+  | even x    = oddFactorial (x - 1)
   | otherwise = x * oddFactorial (x - 2)
 
 ------------------------------------------------------------------------------
@@ -68,7 +68,7 @@ myGcd :: Integer -> Integer -> Integer
 myGcd 0 b = b
 myGcd a 0 = a
 myGcd a b
-  | a > b = myGcd (a-b) b
+  | a > b     = myGcd (a-b) b
   | otherwise = myGcd a (b - a)
 
 ------------------------------------------------------------------------------
@@ -87,7 +87,7 @@ myGcd a b
 leftpad :: String -> Int -> String
 leftpad x y
   | length x /= y = leftpad (" " ++ x) y
-  | otherwise = x
+  | otherwise     = x
 
 ------------------------------------------------------------------------------
 -- Ex 5: let's make a countdown for a rocket! Given a number, you
@@ -125,17 +125,18 @@ countdown' s x = countdown' (s ++ (show x) ++ "... ") (x - 1)
 -- Hint: remember the mod function!
 
 smallestDivisor :: Integer -> Integer
-smallestDivisor x = todo
--- smallestDivisor n
---   | n `div` 2 /= 0 && n `div` 2 /= 1 && even n = smallestDivisor (n `div` 2)
---   | otherwise = n
+smallestDivisor x
+  | x == 1 = 1
+  | x == 0 = 0
+  | otherwise = smallestDivisor' x 2
 
 
--- smallestDivisor' x y :: Integer -> Integer -> Integer
--- smallestDivisor' x y
---   | x / y 
---   smallestDivisor' ()
-
+smallestDivisor' :: Integer -> Integer -> Integer
+smallestDivisor' x y
+  | x == y = x
+  | x `mod` y == 0 = y
+  | otherwise = smallestDivisor' x (y+1)
+  
 ------------------------------------------------------------------------------
 -- Ex 7: implement a function isPrime that checks if the given number
 -- is a prime number. Use the function smallestDivisor.
@@ -143,7 +144,9 @@ smallestDivisor x = todo
 -- Ps. 0 and 1 are not prime numbers
 
 isPrime :: Integer -> Bool
-isPrime = todo
+isPrime x
+  | x == 0 || x == 1 = False
+  | otherwise = smallestDivisor x == x
 
 ------------------------------------------------------------------------------
 -- Ex 8: implement a function biggestPrimeAtMost that returns the
@@ -158,4 +161,6 @@ isPrime = todo
 --   biggestPrimeAtMost 10 ==> 7
 
 biggestPrimeAtMost :: Integer -> Integer
-biggestPrimeAtMost = todo
+biggestPrimeAtMost x
+  | isPrime x = x
+  | otherwise = biggestPrimeAtMost (x-1)
